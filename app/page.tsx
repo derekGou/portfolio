@@ -12,7 +12,7 @@ export default function Home() {
           <div className="flex flex-col pt-16 md:pr-8 md:pt-0 lg:pr-16 w-fit h-fit items-center md:items-start">
             <p>Welcome to my website!</p>
             <h1>
-              I'm{" "}
+              I&apos;m{" "}
               <span className="inline-flex items-center">
                 <Image
                   src="/LogoPFLeft.svg"
