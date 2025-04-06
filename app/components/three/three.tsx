@@ -107,47 +107,49 @@ export default function Three() {
         document.addEventListener("visibilitychange", onVisibilityChange);
 
         const canvasSize = () => {
-            const box = new THREE.Box3().setFromObject(group);
-            const size = new THREE.Vector3();
-            box.getSize(size);
-            function getGroupSizeInPixels(
-                group: THREE.Group, 
-                camera: THREE.Camera, 
-                renderer: THREE.WebGLRenderer
-            ): { width: number; height: number } {
-            
+            if (state>=3){
                 const box = new THREE.Box3().setFromObject(group);
-                if (!box) return { width: 0, height: 0 };
-            
-                const min = box.min.clone();
-                const max = box.max.clone();
-            
-                const minScreen = worldToScreen(min, camera, renderer);
-                const maxScreen = worldToScreen(max, camera, renderer);
-                
-                const width = Math.abs(maxScreen.x - minScreen.x);
-                const height = Math.abs(maxScreen.y - minScreen.y);
-                
-                return { width, height };
-            }
-            
-            function worldToScreen(
-                    pos: THREE.Vector3, 
+                const size = new THREE.Vector3();
+                box.getSize(size);
+                function getGroupSizeInPixels(
+                    group: THREE.Group, 
                     camera: THREE.Camera, 
                     renderer: THREE.WebGLRenderer
-                ): { x: number; y: number } {
+                ): { width: number; height: number } {
                 
-                const canvas = renderer.domElement;
-                const vector = pos.clone().project(camera);
+                    const box = new THREE.Box3().setFromObject(group);
+                    if (!box) return { width: 0, height: 0 };
                 
-                return {
-                    x: (vector.x + 1) * 0.5 * canvas.width,
-                    y: (1 - vector.y) * 0.5 * canvas.height
-                };
+                    const min = box.min.clone();
+                    const max = box.max.clone();
+                
+                    const minScreen = worldToScreen(min, camera, renderer);
+                    const maxScreen = worldToScreen(max, camera, renderer);
+                    
+                    const width = Math.abs(maxScreen.x - minScreen.x);
+                    const height = Math.abs(maxScreen.y - minScreen.y);
+                    
+                    return { width, height };
+                }
+                
+                function worldToScreen(
+                        pos: THREE.Vector3, 
+                        camera: THREE.Camera, 
+                        renderer: THREE.WebGLRenderer
+                    ): { x: number; y: number } {
+                    
+                    const canvas = renderer.domElement;
+                    const vector = pos.clone().project(camera);
+                    
+                    return {
+                        x: (vector.x + 1) * 0.5 * canvas.width,
+                        y: (1 - vector.y) * 0.5 * canvas.height
+                    };
+                }
+                const sizeInPixels = getGroupSizeInPixels(group, orthocamera, renderer);
+            
+                setDimensions([`${sizeInPixels.width}px`, `${sizeInPixels.height}px`]);
             }
-            const sizeInPixels = getGroupSizeInPixels(group, orthocamera, renderer);
-        
-            setDimensions([`${sizeInPixels.width}px`, `${sizeInPixels.height}px`]);
         }
 
         // lighting

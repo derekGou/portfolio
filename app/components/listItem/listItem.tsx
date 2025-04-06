@@ -6,7 +6,7 @@ interface Props {
 
 export default function ListItem({children}: Props) {
     return (
-        <div className="flex flex-row gap-4 items-center justify-center">
+        <div className="transition-opacity flex flex-row gap-4 items-center justify-start">
             <Image
                 alt="bullet point"
                 className="h-4 w-4"
