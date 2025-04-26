@@ -1,3 +1,4 @@
+"use client"
 export default function Note() {
     return (
         <div className="fixed bottom-0 left-0">
