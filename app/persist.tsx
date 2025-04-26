@@ -57,7 +57,7 @@ function Persist() {
     }, [])
 
     useEffect(()=>{
-        const handler = (msg:any) => {
+        const handler = (msg:string | [string, string[]]) => {
             if (Array.isArray(msg)){
                 if (msg[0]=="dimensions"){
                     setPlaceStyle({ width: msg[1][0], height: msg[1][0] })
@@ -69,7 +69,7 @@ function Persist() {
     }, [])
         
     useEffect(()=>{
-        const handler = (msg:any) => {
+        const handler = (msg:string | [string, string[]]) => {
             if (msg=="animated"){
                 setAnimated(true);
             }
