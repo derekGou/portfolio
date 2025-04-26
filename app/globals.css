@@ -8,10 +8,9 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--foreground) !important;
+  background: var(--background) !important;
   font-family: 'IBM Plex Mono', monospace;
-  padding: 4rem;
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
@@ -22,9 +21,16 @@ body {
 h1 {
   font-size: 2rem;
 }
+h2 {
+  font-size: 1.5rem;
+}
 
 @media screen and (min-width: 768px) {
   body {
     text-align: left;
   }
+}
+
+canvas {
+  display: block;
 }

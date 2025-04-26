@@ -1,7 +1,8 @@
+"use client"
 import Image from "next/image";
 
 interface Props {
-    children?: string;
+    children?: any;
 }
 
 export default function ListItem({children}: Props) {

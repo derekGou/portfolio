@@ -3,13 +3,28 @@ import * as THREE from "three";
 import { useRef, useEffect, useState } from "react";
 import gsap from 'gsap';
 import eventBus from "../eventBus/eventBus";
+import { usePathname } from "next/navigation";
 
 export default function Three() {
     // init variables
     const refContainer = useRef<HTMLDivElement>(null);
     const [imageData, setImageData] = useState<ImageData | null>(null);
-    const [faceData, setFaceData] = useState<ImageData | null>(null);
+    const [homeData, setHomeData] = useState<ImageData | null>(null);
+    const [aboutData, setAboutData] = useState<ImageData | null>(null);
+    const [projectData, setProjectData] = useState<ImageData | null>(null);
     const [dimensions, setDimensions] = useState(['100vw', '100vh']);
+    const pathName = usePathname();
+    const pathRef = useRef<HTMLButtonElement>(null);
+    const latestPathRef = useRef(pathName);
+
+    useEffect(()=>{
+        pathRef.current?.click();
+        latestPathRef.current = pathName;
+    }, [pathName]);
+
+    useEffect(()=>{
+        eventBus.emit("myEvent", ["dimensions", dimensions]);
+    }, [dimensions]);
 
     // read logo data
     const src = "LogoPF.svg";
@@ -22,20 +37,19 @@ export default function Three() {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
             if (!ctx) return;
+            canvas.width = 150
+            canvas.height = 150
+            ctx.drawImage(img, 0, 0, 150, 150);
 
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-
-            setImageData(ctx.getImageData(0, 0, img.width, img.height));
+            setImageData(ctx.getImageData(0, 0, 150, 150));
         };
     }, [src]);
 
     // read face data
-    const face = "face.png";
+    const home = "home.png";
     useEffect(() => {
         const img = new Image();
-        img.src = face;
+        img.src = home;
         img.crossOrigin = "Anonymous";
 
         img.onload = () => {
@@ -43,18 +57,60 @@ export default function Three() {
             const ctx = canvas.getContext("2d");
             if (!ctx) return;
 
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
+            canvas.width = 75
+            canvas.height = 75
+            ctx.drawImage(img, 0, 0, 75, 75);
 
-            setFaceData(ctx.getImageData(0, 0, img.width, img.height));
+            setHomeData(ctx.getImageData(0, 0, 75, 75));
         };
-    }, [face]);
+    }, [home]);
+
+    // read about data
+    const about = "about.png";
+    useEffect(() => {
+        const img = new Image();
+        img.src = about;
+        img.crossOrigin = "Anonymous";
+
+        img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return;
+
+            canvas.width = 75
+            canvas.height = 75
+            ctx.drawImage(img, 0, 0, 75, 75);
+
+            setAboutData(ctx.getImageData(0, 0, 75, 75));
+        };
+    }, [about]);
+
+    // read project data
+    const project = "project.png";
+    useEffect(() => {
+        const img = new Image();
+        img.src = project;
+        img.crossOrigin = "Anonymous";
+
+        img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return;
+
+            canvas.width = 75
+            canvas.height = 75
+            ctx.drawImage(img, 0, 0, 75, 75);
+
+            setProjectData(ctx.getImageData(0, 0, 75, 75));
+        };
+    }, [project]);
 
     // scene
     useEffect(() => {
         if (!imageData) return;
-        if (!faceData) return;
+        if (!homeData) return;
+        if (!aboutData) return;
+        if (!projectData) return;
 
         // init scene
         const scene = new THREE.Scene();
@@ -72,11 +128,16 @@ export default function Three() {
         );
 
         // init renderer
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        const renderer = new THREE.WebGLRenderer({ 
+            antialias: true,
+            powerPreference: "high-performance",
+        });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0x000000, 0);
+        renderer.setClearColor(new THREE.Color("#000000"), 0);
         if (refContainer.current) {
-            refContainer.current.innerHTML = "";
+            while (refContainer.current.firstChild) {
+                refContainer.current.removeChild(refContainer.current.firstChild);
+            }
             refContainer.current.appendChild(renderer.domElement);
         };
 
@@ -92,7 +153,7 @@ export default function Three() {
             orthocamera.bottom = -frustumSize;
             orthocamera.updateProjectionMatrix();
 
-            renderer.setSize(width, height);
+            renderer.setSize(window.innerWidth, window.innerHeight);
 
             canvasSize();
         };
@@ -195,7 +256,7 @@ export default function Three() {
                         metalness: 0.5,
                         roughness: 0.5,
                         transparent: true,
-                        opacity: imageData.data[index + 3] / 255,
+                        opacity: imageData.data[index + 3] === 0 ? 0 : imageData.data[index + 3] / 255,
                     });
 
                     const point = new THREE.Mesh(pointGeo, pointMat);
@@ -228,7 +289,7 @@ export default function Three() {
         // face animation
         let faceLst = Array.from({ length: 5625 }, (_, index) => index);
         let animationsRemaining = group.children.length;
-        function animatePixel(obj: THREE.Mesh, index: number): void {
+        function animatePixel(obj: THREE.Mesh, index: number, faceData: ImageData): void {
             if (!faceData) return;
         
             const pos = index * 4;
@@ -269,6 +330,12 @@ export default function Three() {
             }
         }
         
+        function onNav() {
+            animationsRemaining = group.children.length;
+            faceLst = Array.from({ length: 5625 }, (_, index) => index);
+            transitioned = false;
+        }
+
         // animation
         const animate = function () {
             requestAnimationFrame(animate)
@@ -294,10 +361,16 @@ export default function Three() {
                     break;
                 case 1: // morph to face
                     const childrenArray: THREE.Object3D[] = [...group.children];
+                    let startImage = homeData;
+                    if (pathName=="/about"){
+                        startImage=aboutData;
+                    } else if (pathName=="/projects"){
+                        startImage=projectData;
+                    }
                     childrenArray.forEach((child) => {
                         if (child instanceof THREE.Mesh) {
                             const tempInd = Math.floor(Math.random()*faceLst.length);
-                            animatePixel(child as THREE.Mesh, faceLst[tempInd]);
+                            animatePixel(child as THREE.Mesh, faceLst[tempInd], startImage);
                             faceLst = faceLst.filter((_, i) => i !== tempInd);
                             checkStateTransition();
                         }
@@ -314,6 +387,29 @@ export default function Three() {
                     eventBus.emit("myEvent", "animated");
                     state = 5;
                     break;
+                case 5:
+                    pathRef.current?.addEventListener("click", onNav);
+                    state = 6;
+                    break;
+                case 6:
+                    if (animationsRemaining>0){
+                        const childrenArray: THREE.Object3D[] = [...group.children];
+                        let startImage2 = homeData;
+                        if (latestPathRef.current=="/about"){
+                            startImage2=aboutData;
+                        } else if (latestPathRef.current=="/projects"){
+                            startImage2=projectData;
+                        }
+                        childrenArray.forEach((child) => {
+                            if (child instanceof THREE.Mesh) {
+                                const tempInd = Math.floor(Math.random()*faceLst.length);
+                                animatePixel(child as THREE.Mesh, faceLst[tempInd], startImage2);
+                                faceLst = faceLst.filter((_, i) => i !== tempInd);
+                                checkStateTransition();
+                            }
+                        });
+                    }
+                    break;
             };
             renderer.render(scene, orthocamera);
         };
@@ -321,13 +417,17 @@ export default function Three() {
 
         return () => {
             window.removeEventListener("resize", onResize);
+            pathRef.current?.removeEventListener("click", onNav);
             renderer.dispose();
         };
-    }, [imageData, faceData]);
+    }, [imageData, homeData, aboutData, projectData]);
 
     return (
-        <div className="flex items-center justify-center overflow-hidden" style={{ width: dimensions[0], height: dimensions[1] }}>
-            <div ref={refContainer}></div>
-        </div>
+        <>
+            <div className="flex items-center justify-center overflow-hidden" style={{ width: dimensions[0], height: dimensions[1] }}>
+                <div ref={refContainer}></div>
+            </div>
+            <button ref={pathRef}></button>
+        </>
     );
 };
