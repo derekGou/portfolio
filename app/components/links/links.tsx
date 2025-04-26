@@ -1,5 +1,6 @@
 "use client"
 import { IconContext } from "react-icons";
+import Link from "next/link";
 import { FaGithubSquare, FaLinkedin, FaInstagramSquare, FaEnvelopeSquare } from "react-icons/fa";
 
 export default function Links() {
@@ -7,18 +8,18 @@ export default function Links() {
         <div className="h-[40px]">
             <IconContext.Provider value={{ color: "#fff", size: "40" }}>
                 <div className="flex flex-row items-center justify-center gap-2 h-fit w-fit">
-                    <a href="https://github.com/derekGou" target="_blank" rel="noopener noreferrer">
+                    <Link href="https://github.com/derekGou" target="_blank" rel="noopener noreferrer">
                         <FaGithubSquare />
-                    </a>
-                    <a href="http://linkedin.com/in/derek-gou" target="_blank" rel="noopener noreferrer">
+                    </Link>
+                    <Link href="http://linkedin.com/in/derek-gou" target="_blank" rel="noopener noreferrer">
                         <FaLinkedin />
-                    </a>
-                    <a href="https://www.instagram.com/derekgou" target="_blank" rel="noopener noreferrer">
+                    </Link>
+                    <Link href="https://www.instagram.com/derekgou" target="_blank" rel="noopener noreferrer">
                         <FaInstagramSquare />
-                    </a>
-                    <a href="mailto:derekgou19@gmail.com" target="_blank">
+                    </Link>
+                    <Link href="mailto:derekgou19@gmail.com" target="_blank">
                         <FaEnvelopeSquare />
-                    </a>
+                    </Link>
                 </div>
             </IconContext.Provider>
         </div>
