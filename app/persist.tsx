@@ -1,12 +1,13 @@
 "use client";
 import { memo, useEffect, useState, useRef } from "react";
+import { usePathname } from "next/navigation";
+import eventBus from "./components/eventBus/eventBus";
 import Three from "./components/three/three";
 import Navbar from "./components/navbar/navbar";
 import HomeContent from "./components/heroContent/heroChildren/home";
 import AboutContent from "./components/heroContent/heroChildren/about";
 import ProjectContent from "./components/heroContent/heroChildren/projects";
-import { usePathname } from "next/navigation";
-import eventBus from "./components/eventBus/eventBus";
+import Note from "./components/note/note";
 
 function Persist() {
     const pathName = usePathname();
@@ -100,6 +101,7 @@ function Persist() {
                     </div>
                 </div>
             </div>
+            <Note/>
         </>
     );
 }

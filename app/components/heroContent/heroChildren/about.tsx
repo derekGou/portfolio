@@ -6,9 +6,9 @@ export default function AboutContent() {
             <p>Derek Gou</p>
             <h1>About Me</h1>
             <div className="flex flex-col">
-                <ListItem>I'm a student from Waterloo, Canada</ListItem>
+                <ListItem>I&apos;m a student from Waterloo, Canada</ListItem>
                 <ListItem>I love building web and desktop apps</ListItem>
-                <ListItem>I'm an avid chess and tennis player</ListItem>
+                <ListItem>I&apos;m an avid chess and tennis player</ListItem>
             </div>
         </div>
     );

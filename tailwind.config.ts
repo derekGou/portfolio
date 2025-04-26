@@ -11,6 +11,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        logoGreen: "#1cb497",
+        logoBlue: "#0dbbe4",
       },
     },
   },
