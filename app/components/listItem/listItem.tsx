@@ -1,8 +1,9 @@
 "use client"
 import Image from "next/image";
+import { ReactNode } from "react";
 
 interface Props {
-    children?: any;
+    children?: ReactNode;
 }
 
 export default function ListItem({children}: Props) {
