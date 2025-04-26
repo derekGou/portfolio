@@ -45,6 +45,7 @@ function Persist() {
     }, [content])
 
     useEffect(()=>{
+        console.log("persist mounted")
         const handler = () => {
             if (window.innerWidth>=768){
                 setStyle({ width: `${(measure.current?.offsetWidth||0)+1}px`, height: "auto" })
