@@ -5,8 +5,8 @@ import { FaGithubSquare, FaLinkedin, FaInstagramSquare, FaEnvelopeSquare } from 
 
 export default function Links() {
     return (
-        <div className="h-[40px]">
-            <IconContext.Provider value={{ color: "#fff", size: "40" }}>
+        <div className="h-[36px]">
+            <IconContext.Provider value={{ color: "#fff", size: "36" }}>
                 <div className="flex flex-row items-center justify-center gap-2 h-fit w-fit">
                     <Link href="https://github.com/derekGou" target="_blank" rel="noopener noreferrer">
                         <FaGithubSquare />

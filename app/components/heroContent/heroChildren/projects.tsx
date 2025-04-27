@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function ProjectContent() {
     return (
-        <div className="flex flex-col pt-8 md:pr-8 md:pt-0 lg:pr-16 w-fit h-fit items-center md:items-start">
+        <div className="flex flex-col pt-4 md:pr-4 lg:pr-8 md:pt-0 lg:pr-16 w-fit h-fit items-center md:items-start">
             <p>Derek Gou</p>
             <h1>What I&apos;ve been up to</h1>
             <div className="flex flex-col">

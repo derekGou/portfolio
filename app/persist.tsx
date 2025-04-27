@@ -81,7 +81,7 @@ function Persist() {
 
     return (
         <>
-            <div className="fixed top-[-100%] flex flex-col items-center justify-center w-screen h-screen p-6">
+            <div className="fixed top-[-100%] flex flex-col items-center justify-center w-screen h-screen p-8 md:p-12">
                 <div className="flex flex-col md:flex-row-reverse items-center justify-center w-fit h-fit">
                     <div style={placeStyle}/>
                     <div className="h-fit w-fit" ref={measure}>
@@ -89,8 +89,9 @@ function Persist() {
                     </div>
                 </div>
             </div>
+            <Note/>
             <Navbar/>
-            <div className="flex flex-col items-center justify-center w-screen h-screen p-6">
+            <div className="flex flex-col items-center justify-center w-screen h-screen p-8 md:p-12">
                 <div className="flex flex-col md:flex-row-reverse items-center justify-center w-fit h-fit">
                     <Three />
                     <div
@@ -102,7 +103,6 @@ function Persist() {
                     </div>
                 </div>
             </div>
-            <Note/>
         </>
     );
 }

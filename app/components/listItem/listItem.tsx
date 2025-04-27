@@ -16,7 +16,7 @@ export default function ListItem({children}: Props) {
                 width={16}
                 height={16}
             />
-            <p>{children}</p>
+            <p className="text-left">{children}</p>
         </div>
     )
 }
