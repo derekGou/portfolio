@@ -3,13 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #111;
   --foreground: #fff;
 }
 
 body {
   color: var(--foreground) !important;
-  background: var(--background) !important;
   font-family: 'IBM Plex Mono', monospace;
   width: 100vw;
   height: 100vh;
@@ -28,7 +26,8 @@ body::-webkit-scrollbar {
 }
 
 h1 {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  font-weight: 600;
 }
 h2 {
   font-size: 1.5rem;
@@ -42,7 +41,7 @@ p {
     text-align: left;
   }
   h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
   h2 {
     font-size: 1.5rem;
@@ -57,7 +56,7 @@ p {
     text-align: left;
   }
   h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
   h2 {
     font-size: 1.5rem;

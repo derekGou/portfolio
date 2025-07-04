@@ -12,7 +12,6 @@ export default function Three() {
     const [homeData, setHomeData] = useState<ImageData | null>(null);
     const [aboutData, setAboutData] = useState<ImageData | null>(null);
     const [projectData, setProjectData] = useState<ImageData | null>(null);
-    const [dimensions, setDimensions] = useState(['100vw', '100vh']);
     const pathName = usePathname();
     const pathRef = useRef<HTMLButtonElement>(null);
     const latestPathRef = useRef(pathName);
@@ -21,10 +20,6 @@ export default function Three() {
         pathRef.current?.click();
         latestPathRef.current = pathName;
     }, [pathName]);
-
-    useEffect(()=>{
-        eventBus.emit("myEvent", ["dimensions", dimensions]);
-    }, [dimensions]);
 
     // read logo data
     const src = "LogoPF.svg";
@@ -37,16 +32,16 @@ export default function Three() {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
             if (!ctx) return;
-            canvas.width = 150
-            canvas.height = 150
-            ctx.drawImage(img, 0, 0, 150, 150);
+            canvas.width = 75
+            canvas.height = 75
+            ctx.drawImage(img, 0, 0, 75, 75);
 
-            setImageData(ctx.getImageData(0, 0, 150, 150));
+            setImageData(ctx.getImageData(0, 0, 75, 75));
         };
     }, [src]);
 
     // read face data
-    const home = "home.png";
+    const home = "faces/home.png";
     useEffect(() => {
         const img = new Image();
         img.src = home;
@@ -66,7 +61,7 @@ export default function Three() {
     }, [home]);
 
     // read about data
-    const about = "about.png";
+    const about = "faces/about.png";
     useEffect(() => {
         const img = new Image();
         img.src = about;
@@ -86,7 +81,7 @@ export default function Three() {
     }, [about]);
 
     // read project data
-    const project = "project.png";
+    const project = "faces/project.png";
     useEffect(() => {
         const img = new Image();
         img.src = project;
@@ -114,7 +109,7 @@ export default function Three() {
 
         // init scene
         const scene = new THREE.Scene();
-        const frustumSize = 15;
+        const frustumSize = 20;
 
         // init camera
         const aspect = window.innerWidth / window.innerHeight;
@@ -141,78 +136,6 @@ export default function Three() {
             refContainer.current.appendChild(renderer.domElement);
         };
 
-        // resize hook
-        const onResize = () => {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            const newAspect = width / height;
-
-            orthocamera.left = -frustumSize * newAspect;
-            orthocamera.right = frustumSize * newAspect;
-            orthocamera.top = frustumSize;
-            orthocamera.bottom = -frustumSize;
-            orthocamera.updateProjectionMatrix();
-
-            renderer.setSize(window.innerWidth, window.innerHeight);
-
-            canvasSize();
-        };
-        window.addEventListener("resize", onResize);
-
-        const onVisibilityChange = () => {
-            if (!document.hidden) {
-                onResize();
-            }
-        };
-    
-        document.addEventListener("visibilitychange", onVisibilityChange);
-
-        const canvasSize = () => {
-            if (state>=3){
-                const box = new THREE.Box3().setFromObject(group);
-                const size = new THREE.Vector3();
-                box.getSize(size);
-                function getGroupSizeInPixels(
-                    group: THREE.Group, 
-                    camera: THREE.Camera, 
-                    renderer: THREE.WebGLRenderer
-                ): { width: number; height: number } {
-                
-                    const box = new THREE.Box3().setFromObject(group);
-                    if (!box) return { width: 0, height: 0 };
-                
-                    const min = box.min.clone();
-                    const max = box.max.clone();
-                
-                    const minScreen = worldToScreen(min, camera, renderer);
-                    const maxScreen = worldToScreen(max, camera, renderer);
-                    
-                    const width = Math.abs(maxScreen.x - minScreen.x);
-                    const height = Math.abs(maxScreen.y - minScreen.y);
-                    
-                    return { width, height };
-                }
-                
-                function worldToScreen(
-                        pos: THREE.Vector3, 
-                        camera: THREE.Camera, 
-                        renderer: THREE.WebGLRenderer
-                    ): { x: number; y: number } {
-                    
-                    const canvas = renderer.domElement;
-                    const vector = pos.clone().project(camera);
-                    
-                    return {
-                        x: (vector.x + 1) * 0.5 * canvas.width,
-                        y: (1 - vector.y) * 0.5 * canvas.height
-                    };
-                }
-                const sizeInPixels = getGroupSizeInPixels(group, orthocamera, renderer);
-            
-                setDimensions([`${sizeInPixels.width}px`, `${sizeInPixels.height}px`]);
-            }
-        }
-
         // lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 6);
         scene.add(ambientLight);
@@ -220,71 +143,56 @@ export default function Three() {
         // init group
         const group = new THREE.Group();
         scene.add(group);
-        group.rotation.y = Math.PI / 2;
         group.position.z -= 10;
 
         // init point geometry
-        const pointGeo = new THREE.BoxGeometry(0.08, 0.08, 0.08);
+        const pointGeo = new THREE.BoxGeometry(0.066, 0.066, 0.066);
 
         // add points to scene
         for (let y = 0; y < imageData.height; y++) {
             for (let x = 0; x < imageData.width; x++) {
-                if (x % 2 === 0 && y % 2 === 0) {
-                    const index = (y * imageData.width + x) * 4;
-                    let color = new THREE.Color(
-                        imageData.data[index] / 255,
-                        imageData.data[index + 1] / 255,
-                        imageData.data[index + 2] / 255
-                    );
-                    if (imageData.data[index + 3]==0){
-                        if (Math.random()<0.5){
-                            color = new THREE.Color(
-                                13 / 255,
-                                187 / 255,
-                                228 / 255
-                            );
-                        } else {
-                            color = new THREE.Color(
-                                28 / 255,
-                                180 / 255,
-                                151 / 255
-                            );
-                        };
+                const index = (y * imageData.width + x) * 4;
+                let color = new THREE.Color(
+                    imageData.data[index] / 255,
+                    imageData.data[index + 1] / 255,
+                    imageData.data[index + 2] / 255
+                );
+                if (imageData.data[index + 3]==0){
+                    if (x<=(0.5*imageData.width)){
+                        color = new THREE.Color(
+                            13 / 255,
+                            187 / 255,
+                            228 / 255
+                        );
+                    } else {
+                        color = new THREE.Color(
+                            28 / 255,
+                            180 / 255,
+                            151 / 255
+                        );
                     };
-                    const pointMat = new THREE.MeshStandardMaterial({
-                        color: color,
-                        metalness: 0.5,
-                        roughness: 0.5,
-                        transparent: true,
-                        opacity: imageData.data[index + 3] === 0 ? 0 : imageData.data[index + 3] / 255,
-                    });
-
-                    const point = new THREE.Mesh(pointGeo, pointMat);
-                    point.position.set(
-                        0.06 * (x - imageData.width / 2),
-                        0.06 * ((imageData.height / 2) - y),
-                        (Math.random() - 0.5) * 0.04 * -imageData.height
-                    );
-
-                    group.add(point);
                 };
+                const pointMat = new THREE.MeshStandardMaterial({
+                    color: color,
+                    metalness: 0.5,
+                    roughness: 0.5,
+                    transparent: true,
+                    opacity: imageData.data[index + 3] === 0 ? 0 : imageData.data[index + 3] / 255,
+                });
+
+                const point = new THREE.Mesh(pointGeo, pointMat);
+                point.position.set(
+                    0.11 * (x - imageData.width / 2),
+                    0.11 * ((imageData.height / 2) - y),
+                    0
+                );
+
+                group.add(point);
             };
         };
 
         // state management variables
-        let state = -1;
-        let timeoutTriggered = false;
-
-        // rotation animation
-        let t = 0;
-        const duration = 2;
-        const clock = new THREE.Clock();
-        const initialRotation = group.rotation.y;
-        function easeInOutCubic(t: number) {
-            return t < 0.5
-                ? 4 * t * t * t
-                : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        };
+        let state = 0;
 
         // face animation
         let faceLst = Array.from({ length: 5625 }, (_, index) => index);
@@ -301,22 +209,15 @@ export default function Three() {
         
             gsap.to(obj.material as THREE.Material, { 
                 opacity: 1, 
-                duration: 2, 
-                ease: "power4.inOut",
-            });
-            gsap.to(obj.position, {
-                x: (index % 75 - 37) * 0.15,
-                y: -(Math.floor(index / 75) - 37) * 0.15,
-                z: -10,
-                duration: 2,
-                ease: "power4.inOut",
+                duration: 1.5, 
+                ease: "linear",
             });
             gsap.to(obj.scale, {
                 x: size,
                 y: size,
                 z: 0.25,
-                duration: 2,
-                ease: "power4.inOut",
+                duration: 1.5,
+                ease: "linear",
             });
         };
         let transitioned = false;
@@ -337,41 +238,27 @@ export default function Three() {
         }
 
         // animation
+        let timeout = false;
         const animate = function () {
             requestAnimationFrame(animate)
             switch (state) {
-                case -1: // initial pause
-                    if (!timeoutTriggered){
-                        timeoutTriggered = true;                
+                case 0:
+                    if (!timeout){
                         setTimeout(() => {
-                            state = 0;
-                            timeoutTriggered = false;
-                        }, 500);
-                    };
-                    break;
-                case 0: // rotate
-                    if (group.rotation.y === 0) {
-                        state = 1;
-                        t = 0;
-                        break;
-                    };
-                    t += clock.getDelta() / duration;
-                    if (t > 1) t = 1;
-                    group.rotation.y = THREE.MathUtils.lerp(initialRotation, 0, easeInOutCubic(t));
-                    break;
-                case 1: // morph to face
-                    const childrenArray: THREE.Object3D[] = [...group.children];
-                    let startImage = homeData;
-                    if (pathName=="/about"){
-                        startImage=aboutData;
-                    } else if (pathName=="/projects"){
-                        startImage=projectData;
+                            state = 1;
+                        }, 1000);
+                        timeout = true;
                     }
-                    childrenArray.forEach((child) => {
+                    break
+                case 1: // morph to face
+                    const startImage =
+                        pathName === "/about" ? aboutData :
+                        pathName === "/projects" ? projectData :
+                        homeData;
+
+                    group.children.forEach((child, i) => {
                         if (child instanceof THREE.Mesh) {
-                            const tempInd = Math.floor(Math.random()*faceLst.length);
-                            animatePixel(child as THREE.Mesh, faceLst[tempInd], startImage);
-                            faceLst = faceLst.filter((_, i) => i !== tempInd);
+                            animatePixel(child, faceLst[i], startImage);
                             checkStateTransition();
                         }
                     });
@@ -380,7 +267,6 @@ export default function Three() {
                 case 2: // temp state
                     break;
                 case 3: // resize canvas parent
-                    canvasSize();
                     state = 4;
                     break;
                 case 4:
@@ -400,11 +286,10 @@ export default function Three() {
                         } else if (latestPathRef.current=="/projects"){
                             startImage2=projectData;
                         }
-                        childrenArray.forEach((child) => {
+                        
+                        childrenArray.forEach((child, i) => {
                             if (child instanceof THREE.Mesh) {
-                                const tempInd = Math.floor(Math.random()*faceLst.length);
-                                animatePixel(child as THREE.Mesh, faceLst[tempInd], startImage2);
-                                faceLst = faceLst.filter((_, i) => i !== tempInd);
+                                animatePixel(child as THREE.Mesh, faceLst[i], startImage2);
                                 checkStateTransition();
                             }
                         });
@@ -416,15 +301,13 @@ export default function Three() {
         animate();
 
         return () => {
-            window.removeEventListener("resize", onResize);
-            pathRef.current?.removeEventListener("click", onNav);
             renderer.dispose();
         };
     }, [imageData, homeData, aboutData, projectData]);
 
     return (
         <>
-            <div className="flex items-center justify-center overflow-hidden" style={{ width: dimensions[0], height: dimensions[1] }}>
+            <div className="w-[220px] h-[220px] flex items-center justify-center overflow-hidden">
                 <div ref={refContainer}></div>
             </div>
             <button ref={pathRef}></button>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import Persist from "./persist"
+import Persist from "./persist";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,10 +36,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${ibmPlexMono.variable} antialiased`}
       >
-        <Persist/>
-        <main>
+        <Persist>
           {children}
-        </main>
+        </Persist>
       </body>
     </html>
   );

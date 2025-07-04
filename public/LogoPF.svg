@@ -9,6 +9,9 @@
    id="svg98"
    sodipodi:docname="LogoPF.svg"
    inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   inkscape:export-filename="/Users/derekGou/LogoPFDark.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -300,7 +303,7 @@
       <radialGradient
          id="p.11"
          gradientUnits="userSpaceOnUse"
-         gradientTransform="scale(-8.2390684,8.2390684)"
+         gradientTransform="matrix(-8.2390684,0,0,8.2390684,-2e-5,0)"
          spreadMethod="pad"
          cx="-87.38836116251026"
          cy="40.78130954080885"
@@ -695,12 +698,12 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="0.35515473"
-     inkscape:cx="-401.23357"
-     inkscape:cy="446.28435"
-     inkscape:window-width="1464"
+     inkscape:cx="843.29442"
+     inkscape:cy="-7.0391855"
+     inkscape:window-width="1472"
      inkscape:window-height="730"
-     inkscape:window-x="2018"
-     inkscape:window-y="141"
+     inkscape:window-x="2191"
+     inkscape:window-y="230"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg98" />
   <path
@@ -916,10 +919,10 @@
      id="path60" />
   <path
      fill="url(#p.11)"
-     d="m 767.99866,336 v 0 c 0,-26.50967 -21.49029,-48 -48,-48 v 0 c -12.73035,0 -24.93933,5.05713 -33.9411,14.05887 -9.00177,9.00174 -14.0589,21.21075 -14.0589,33.94113 v 0 c 0,26.50967 21.49036,48 48,48 v 0 c 26.50971,0 48,-21.49033 48,-48 z"
+     d="m 767.99866,336 v 0 c 0,-26.50967 -21.4903,-48 -48,-48 v 0 c -12.7304,0 -24.9394,5.05713 -33.9411,14.05887 -9.0018,9.00174 -14.0589,21.21075 -14.0589,33.94113 v 0 c 0,26.50967 21.4903,48 48,48 v 0 c 26.5097,0 48,-21.49033 48,-48 z"
      fill-rule="evenodd"
      id="path62"
-     style="fill:url(#p.11);opacity:0.8" />
+     style="opacity:0.8;fill:url(#p.11)" />
   <path
      fill="#0dbbe4"
      d="m 479.9987,336 v 0 c 0,-26.50967 -21.49033,-48 -48,-48 v 0 c -12.73038,0 -24.93939,5.05713 -33.94113,14.05887 C 389.05583,311.06061 383.9987,323.26962 383.9987,336 v 0 c 0,26.50967 21.49033,48 48,48 v 0 c 26.50968,0 48,-21.49033 48,-48 z"

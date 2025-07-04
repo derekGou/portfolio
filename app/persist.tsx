@@ -1,110 +1,43 @@
-"use client";
-import { memo, useEffect, useState, useRef } from "react";
-import { usePathname } from "next/navigation";
-import eventBus from "./components/eventBus/eventBus";
+import { memo, ReactNode } from "react";
 import Three from "./components/three/three";
-import Navbar from "./components/navbar/navbar";
-import HomeContent from "./components/heroContent/heroChildren/home";
-import AboutContent from "./components/heroContent/heroChildren/about";
-import ProjectContent from "./components/heroContent/heroChildren/projects";
-import Note from "./components/note/note";
+import Background from "./components/background/background";
+import Glass from "./components/glass/glass";
+import Hole from "./components/hole/hole";
+import WebNav from "./components/nav/web";
 
-function Persist() {
-    const pathName = usePathname();
-    const [content, setContent] = useState(<></>);
-    const [animated, setAnimated] = useState(false);
-    const [placeStyle, setPlaceStyle] = useState({ width: "0px", height: "0px" });
-    const [style, setStyle] = useState({ width: "0px", height: "0px" });
-    const [opacity, setOpacity] = useState(0);
+interface Props {
+    children?: ReactNode;
+}
 
-    const measure = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (animated){
-            setOpacity(0)
-            setTimeout(() => {
-                setContent(
-                    pathName === "/" ? <HomeContent /> :
-                    pathName === "/about" ? <AboutContent /> :
-                    pathName === "/projects" ? <ProjectContent /> :
-                    <></>
-                );
-                setTimeout(() => {
-                    setOpacity(1)
-                }, 600);
-            }, 600);
-        }
-    }, [pathName, animated]);
-
-    useEffect(()=>{
-        if (window.innerWidth>=768){
-            setStyle({ width: `${(measure.current?.offsetWidth||0)+1}px`, height: "auto" })
-        } else {
-            setStyle({ width: "auto", height: `${(measure.current?.offsetHeight||0)+1}px` })
-        }
-    }, [content])
-
-    useEffect(()=>{
-        console.log("persist mounted")
-        const handler = () => {
-            if (window.innerWidth>=768){
-                setStyle({ width: `${(measure.current?.offsetWidth||0)+1}px`, height: "auto" })
-            } else {
-                setStyle({ width: "auto", height: `${(measure.current?.offsetHeight||0)+1}px` })
-            }
-        }
-        window.addEventListener("resize", handler)
-        return () => window.removeEventListener("resize", handler)
-    }, [])
-
-    useEffect(()=>{
-        const handler = (msg:string | [string, string[]]) => {
-            if (Array.isArray(msg)){
-                if (msg[0]=="dimensions"){
-                    setPlaceStyle({ width: msg[1][0], height: msg[1][0] })
-                }
-            }
-        }
-        eventBus.on("myEvent", handler);
-        return () => eventBus.off("myEvent", handler)
-    }, [])
-        
-    useEffect(()=>{
-        const handler = (msg:string | [string, string[]]) => {
-            if (msg=="animated"){
-                setAnimated(true);
-            }
-        }
-        eventBus.on("myEvent", handler);
-        return () => eventBus.off("myEvent", handler)
-    }, [])
-
+function Persist({children}: Props){
+    const images = [
+        "3519", "3990", "4222", "4229", "4257"
+    ]
+    const randomImage = "bg/IMG_" + images[Math.floor(Math.random() * images.length)] + ".JPG"
     return (
         <>
-            <div className="fixed top-[-100%] flex flex-col items-center justify-center w-screen h-screen p-8 md:p-12">
-                <div className="flex flex-col md:flex-row-reverse items-center justify-center w-fit h-fit">
-                    <div style={placeStyle}/>
-                    <div className="h-fit w-fit" ref={measure}>
-                        {content}
-                    </div>
-                </div>
-            </div>
-            <Note/>
-            <Navbar/>
-            <div className="flex flex-col items-center justify-center w-screen h-screen p-8 md:p-12">
-                <div className="flex flex-col md:flex-row-reverse items-center justify-center w-fit h-fit">
-                    <Three />
-                    <div
-                        className="box-border w-fit overflow-hidden flex flex-row items-end justify-end"
-                    >
-                        <div style={{ ...style, opacity: opacity }} className="transition-all duration-400 ease-linear">
-                            {content}
+            <Background image={randomImage}/>
+            <div className="flex flex-row items-center justify-center h-screen w-screen">
+                <Glass>
+                    <div className="size-fit flex flex-col">
+                        <div className="size-fit m-8 flex flex-col gap-8"> 
+                            <Hole image={randomImage}>
+                                <div className="h-fit w-fit m-4"> 
+                                    <Glass dark={true}>
+                                            <Three />
+                                    </Glass>
+                                </div>
+                            </Hole>
                         </div>
+                        <WebNav/>
                     </div>
-                </div>
+                </Glass>
+                <main>
+                    {children}
+                </main>
             </div>
         </>
-    );
+    )
 }
 
 export default memo(Persist)
