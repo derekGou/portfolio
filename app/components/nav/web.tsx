@@ -35,7 +35,7 @@ export default function WebNav(){
                         </Link>
                         <div style={{
                             height: `${height}px`
-                        }} className="w-1/3 absolute !border !border-solid border-white inset-shadow-sm inset-shadow-white"></div>
+                        }} className="w-1/3 absolute border! border-solid! border-white inset-shadow-xs inset-shadow-white"></div>
                     </div>
                 </nav>
             </Glass>
