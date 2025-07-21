@@ -109,16 +109,14 @@ export default function Three() {
 
         // init scene
         const scene = new THREE.Scene();
-        const frustumSize = 20;
 
         // init camera
-        const aspect = window.innerWidth / window.innerHeight;
         const orthocamera = new THREE.OrthographicCamera(
-            -frustumSize * aspect,
-            frustumSize * aspect,
-            frustumSize,
-            -frustumSize,
-            0.1,
+            -4.5,
+            4.5,
+            4.5,
+            -4.5,
+            0,
             1000
         );
 
@@ -127,8 +125,10 @@ export default function Three() {
             antialias: true,
             powerPreference: "high-performance",
         });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        renderer.setSize(200, 200);
         renderer.setClearColor(new THREE.Color("#000000"), 0);
+        
         if (refContainer.current) {
             while (refContainer.current.firstChild) {
                 refContainer.current.removeChild(refContainer.current.firstChild);
@@ -146,7 +146,7 @@ export default function Three() {
         group.position.z -= 10;
 
         // init point geometry
-        const pointGeo = new THREE.BoxGeometry(0.066, 0.066, 0.066);
+        const pointGeo = new THREE.PlaneGeometry(0.06, 0.06);
 
         // add points to scene
         for (let y = 0; y < imageData.height; y++) {
@@ -157,35 +157,33 @@ export default function Three() {
                     imageData.data[index + 1] / 255,
                     imageData.data[index + 2] / 255
                 );
-                if (imageData.data[index + 3]==0){
-                    if (x<=(0.5*imageData.width)){
-                        color = new THREE.Color(
+                if (imageData.data[index + 3]==0 || (imageData.data[index]==255 && imageData.data[index+1]==255 && imageData.data[index+2]==255)){
+                    color = (x<=(0.5*imageData.width)) ? new THREE.Color(
                             13 / 255,
                             187 / 255,
                             228 / 255
-                        );
-                    } else {
-                        color = new THREE.Color(
+                        ) : new THREE.Color(
                             28 / 255,
                             180 / 255,
                             151 / 255
                         );
-                    };
-                };
-                const pointMat = new THREE.MeshStandardMaterial({
+                }
+                const pointMat = new THREE.MeshBasicMaterial({
                     color: color,
-                    metalness: 0.5,
-                    roughness: 0.5,
-                    transparent: true,
-                    opacity: imageData.data[index + 3] === 0 ? 0 : imageData.data[index + 3] / 255,
                 });
-
                 const point = new THREE.Mesh(pointGeo, pointMat);
                 point.position.set(
                     0.11 * (x - imageData.width / 2),
                     0.11 * ((imageData.height / 2) - y),
                     0
                 );
+
+                const size =
+                    (Math.pow(
+                        (imageData.data[index] + imageData.data[index + 1] + imageData.data[index + 2]) / 765,
+                        1.125
+                    ) * 0.8 + 0.2) * 2 * (imageData.data[index + 3] / 255);
+                point.scale.set(size, size, 1)
 
                 group.add(point);
             };
@@ -197,25 +195,22 @@ export default function Three() {
         // face animation
         let faceLst = Array.from({ length: 5625 }, (_, index) => index);
         let animationsRemaining = group.children.length;
+        const INV_765 = 1 / 765;
+        const INV_255 = 1 / 255;
+
         function animatePixel(obj: THREE.Mesh, index: number, faceData: ImageData): void {
             if (!faceData) return;
         
             const pos = index * 4;
             const size =
                 (Math.pow(
-                    (faceData.data[pos] + faceData.data[pos + 1] + faceData.data[pos + 2]) / 765,
+                    (faceData.data[pos] + faceData.data[pos + 1] + faceData.data[pos + 2]) * INV_765,
                     1.125
-                ) * 0.8 + 0.2) * 2 * (faceData.data[pos + 3] / 255);
+                ) * 0.8 + 0.2) * 2 * (faceData.data[pos + 3] * INV_255);
         
-            gsap.to(obj.material as THREE.Material, { 
-                opacity: 1, 
-                duration: 1.5, 
-                ease: "linear",
-            });
             gsap.to(obj.scale, {
                 x: size,
                 y: size,
-                z: 0.25,
                 duration: 1.5,
                 ease: "linear",
             });
@@ -266,18 +261,15 @@ export default function Three() {
                     break;
                 case 2: // temp state
                     break;
-                case 3: // resize canvas parent
+                case 3:
+                    eventBus.emit("myEvent", "animated");
                     state = 4;
                     break;
                 case 4:
-                    eventBus.emit("myEvent", "animated");
+                    pathRef.current?.addEventListener("click", onNav);
                     state = 5;
                     break;
                 case 5:
-                    pathRef.current?.addEventListener("click", onNav);
-                    state = 6;
-                    break;
-                case 6:
                     if (animationsRemaining>0){
                         const childrenArray: THREE.Object3D[] = [...group.children];
                         let startImage2 = homeData;
@@ -286,7 +278,7 @@ export default function Three() {
                         } else if (latestPathRef.current=="/projects"){
                             startImage2=projectData;
                         }
-                        
+
                         childrenArray.forEach((child, i) => {
                             if (child instanceof THREE.Mesh) {
                                 animatePixel(child as THREE.Mesh, faceLst[i], startImage2);
