@@ -1,8 +1,5 @@
 "use client"
 
-import { useScrollX } from "@/app/hooks/scrollX";
-import { useScrollY } from "@/app/hooks/scrollY";
-import Image from "next/image";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 interface Props {
