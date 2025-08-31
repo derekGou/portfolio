@@ -1,7 +1,7 @@
 import mitt from "mitt";
 
 type Events = {
-  myEvent: string | [string, string[]];
+  myEvent: string;
 };
 
 const eventBus = mitt<Events>();

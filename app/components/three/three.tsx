@@ -100,8 +100,19 @@ export default function Three() {
         };
     }, [project]);
 
+    const [received, setReceived] = useState(false)
+
     // scene
     useEffect(() => {
+        // state management variables
+        let state = received ? 0 : -1;
+        eventBus.on("myEvent", (payload) => {
+            if (payload == "start"){
+                setReceived(true)
+                state = 0
+            }
+        })
+        
         if (!imageData) return;
         if (!homeData) return;
         if (!aboutData) return;
@@ -189,9 +200,6 @@ export default function Three() {
             };
         };
 
-        // state management variables
-        let state = 0;
-
         // face animation
         let faceLst = Array.from({ length: 5625 }, (_, index) => index);
         let animationsRemaining = group.children.length;
@@ -262,14 +270,10 @@ export default function Three() {
                 case 2: // temp state
                     break;
                 case 3:
-                    eventBus.emit("myEvent", "animated");
+                    pathRef.current?.addEventListener("click", onNav);
                     state = 4;
                     break;
                 case 4:
-                    pathRef.current?.addEventListener("click", onNav);
-                    state = 5;
-                    break;
-                case 5:
                     if (animationsRemaining>0){
                         const childrenArray: THREE.Object3D[] = [...group.children];
                         let startImage2 = homeData;

@@ -4,15 +4,17 @@ import { ReactNode } from "react";
 
 interface Props {
     children?: ReactNode;
+    indent?: number
 }
 
-export default function ListItem({children}: Props) {
+export default function ListItem({children, indent}: Props) {
     return (
-        <div className="transition-opacity flex flex-row gap-4 items-center justify-start">
+        <div style={(indent && indent >= 1) ? { filter : "brightness(80%)" } : {}} className="transition-opacity flex flex-row gap-2 items-start justify-start">
+            <div style={ indent ? { width: (indent*2)+"rem" } : {} }/>
             <Image
                 alt="bullet point"
-                className="h-4 w-4"
-                src="/LogoPF.svg"
+                className="h-4 w-4 invert mt-1"
+                src="/bullet.svg"
                 width={16}
                 height={16}
             />

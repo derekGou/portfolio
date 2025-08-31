@@ -1,23 +1,20 @@
 "use client"
 import { IconContext } from "react-icons";
 import Link from "next/link";
-import { FaGithubSquare, FaLinkedin, FaInstagramSquare, FaEnvelopeSquare } from "react-icons/fa";
+import { FaGithubSquare, FaLinkedin, FaEnvelopeSquare } from "react-icons/fa";
 
 export default function Links() {
     return (
         <div className="h-[36px]">
-            <IconContext.Provider value={{ color: "#fff", size: "36" }}>
-                <div className="flex flex-row items-center justify-center gap-2 h-fit w-fit">
-                    <Link href="https://github.com/derekGou" target="_blank" rel="noopener noreferrer">
+            <IconContext.Provider value={{ color: "#eee", size: "36" }}>
+                <div className="flex flex-row items-center justify-center gap-4 h-fit w-fit">
+                    <Link href="https://github.com/derekGou" target="_blank" rel="noopener noreferrer" className="transition-all cursor-pointer hover:brightness-110">
                         <FaGithubSquare />
                     </Link>
-                    <Link href="http://linkedin.com/in/derek-gou" target="_blank" rel="noopener noreferrer">
+                    <Link href="http://linkedin.com/in/derek-gou" target="_blank" rel="noopener noreferrer" className="transition-all cursor-pointer hover:brightness-110">
                         <FaLinkedin />
                     </Link>
-                    <Link href="https://www.instagram.com/derekgou" target="_blank" rel="noopener noreferrer">
-                        <FaInstagramSquare />
-                    </Link>
-                    <Link href="mailto:derekgou19@gmail.com" target="_blank">
+                    <Link href="mailto:derekgou19@gmail.com" target="_blank" className="transition-all cursor-pointer hover:brightness-110">
                         <FaEnvelopeSquare />
                     </Link>
                 </div>

@@ -1,16 +1,32 @@
 "use client"
 
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useEffect, useRef, useState } from "react";
 import HoleImage from "./holeimage";
+import eventBus from "../eventBus/eventBus";
+import { usePathname } from "next/navigation";
 
 interface Props {
     dark?: boolean;
     children?: ReactNode;
     image: string;
+    recalc?: number;
+    setRecalc?: Dispatch<SetStateAction<number>>;
 }
 
-export default function Hole({dark, children, image}: Props){
+export default function Hole({dark, children, image, recalc, setRecalc}: Props){
+    const pathName = usePathname();
+    const pathRef = useRef<HTMLButtonElement>(null);
+    const latestPathRef = useRef(pathName);
+
+    useEffect(()=>{
+        pathRef.current?.click();
+        latestPathRef.current = pathName;
+        if (!setRecalc) return;
+        setRecalc(prev => prev + 1)
+    }, [pathName]);
+
     const [dimensions, setDimensions] = useState({ x : 0 , y : 0 })
+    const [updates, setUpdates] = useState(0)
 
     const boxRef = useRef<HTMLDivElement>(null)
     const [position, setPosition] = useState({ x : 0 , y : 0 })
@@ -19,7 +35,13 @@ export default function Hole({dark, children, image}: Props){
         if (!boxRef.current) return
         const rect = boxRef.current.getBoundingClientRect()
         setPosition({x: rect.left, y: rect.top})
-    }, [boxRef.current, dimensions])
+        if (dimensions.x!=0 && dimensions.y!=0){
+            setUpdates(prev => prev + 1)
+            if (updates==1){
+                eventBus.emit("myEvent", "hole")
+            }
+        }
+    }, [dimensions])
 
     return (
         <>
@@ -29,7 +51,7 @@ export default function Hole({dark, children, image}: Props){
             }}>
 
             </div>
-            <HoleImage image={image} dark={dark} dimensions={setDimensions} position={position}>
+            <HoleImage recalc={recalc} image={image} dark={dark} dimensions={setDimensions} position={position}>
                 {children}
             </HoleImage>
         </>
