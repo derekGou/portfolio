@@ -39,7 +39,7 @@ export default function Background({image}: Props) {
             return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
         }
         document.body.style.backgroundColor = getAverageColor(img) || 'black'
-    }, [image])
+    }, [])
 
     return (
         <div className="fixed top-0 left-0 w-screen h-dvh overflow-hidden -z-50">
