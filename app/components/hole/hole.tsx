@@ -23,7 +23,7 @@ export default function Hole({dark, children, image, recalc, setRecalc}: Props){
         latestPathRef.current = pathName;
         if (!setRecalc) return;
         setRecalc(prev => prev + 1)
-    }, [pathName]);
+    }, [pathName, setRecalc]);
 
     const [dimensions, setDimensions] = useState({ x : 0 , y : 0 })
     const [updates, setUpdates] = useState(0)

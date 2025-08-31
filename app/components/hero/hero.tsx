@@ -6,7 +6,7 @@ import Hole from "../hole/hole"
 import Three from "../three/three"
 import Links from "../links/links"
 import Nav from "../nav/nav"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import eventBus from "../eventBus/eventBus"
 
 interface Props {
