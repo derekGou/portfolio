@@ -21,10 +21,18 @@ export default function Hero({randomImage}:Props){
 
     const recalcMargin = () => {
         if (boxRef.current) {
-            const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
-            const newMargin = (viewportHeight - boxRef.current.clientHeight) / 2;
-            setMargin(prev => (prev !== newMargin ? newMargin : prev));
-            setRecalc(prev => prev + 1);
+            const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+            if (viewportWidth >= 768){
+                const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+                const newMargin = (viewportHeight - boxRef.current.clientHeight) / 2;
+                setMargin(prev => (prev !== newMargin ? newMargin : prev));
+                setRecalc(prev => prev + 1);
+            } else {
+                const viewportHeight = window.innerHeight;
+                const newMargin = (viewportHeight - boxRef.current.clientHeight) / 2;
+                setMargin(prev => (prev !== newMargin ? newMargin : prev));
+                setRecalc(prev => prev + 1);
+            }
         }
     }
 
