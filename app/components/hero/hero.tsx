@@ -27,11 +27,6 @@ export default function Hero({randomImage}:Props){
                 const newMargin = (viewportHeight - boxRef.current.clientHeight) / 2;
                 setMargin(prev => (prev !== newMargin ? newMargin : prev));
                 setRecalc(prev => prev + 1);
-            } else {
-                const viewportHeight = window.innerHeight;
-                const newMargin = (viewportHeight - boxRef.current.clientHeight) / 2;
-                setMargin(prev => (prev !== newMargin ? newMargin : prev));
-                setRecalc(prev => prev + 1);
             }
         }
     }
