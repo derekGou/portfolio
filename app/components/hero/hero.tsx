@@ -21,6 +21,7 @@ export default function Hero({randomImage}:Props){
 
     const recalcMargin = () => {
         if (boxRef.current) {
+            const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
             if (viewportWidth >= 768){
                 const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
                 const newMargin = (viewportHeight - boxRef.current.clientHeight) / 2;
