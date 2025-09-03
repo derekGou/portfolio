@@ -17,7 +17,7 @@ function Persist({children}: Props){
     return (
         <>
             <Background image={randomImage}/>
-            <div className="flex h-fit w-screen items-center justify-center flex-col md:flex-row gap-6 px-6 md:px-16 overflow-hidden">
+            <div className="flex h-fit w-screen items-center justify-center flex-col md:flex-row gap-6 px-3 md:px-16 overflow-hidden">
                 <div className="flex justify-center h-auto md:h-dvh w-screen md:w-auto">
                     <Hero randomImage={randomImage}/>
                 </div>
