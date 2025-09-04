@@ -35,7 +35,10 @@ export default function HoleImage({image, dark, children, recalc, dimensions, po
 
     useEffect(() => {
         function handleResize() {
-            dimensions({ x : boxRef.current?.clientWidth || 0 , y : boxRef.current?.clientHeight || 0 });
+            const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+            if (viewportWidth >= 768){
+                dimensions({ x : boxRef.current?.clientWidth || 0 , y : boxRef.current?.clientHeight || 0 });
+            }
         }
 
         window.addEventListener("resize", handleResize);
@@ -58,7 +61,7 @@ export default function HoleImage({image, dark, children, recalc, dimensions, po
                     <img
                         src={`/bg/IMG_${image}.JPG`}
                         alt="Background image"
-                        className="w-full h-dvh object-cover -z-10"
+                        className="w-full h-screen object-cover -z-10"
                     />
                 </div>
                 <div className="relative z-10">

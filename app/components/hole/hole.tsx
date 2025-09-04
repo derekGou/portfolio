@@ -22,8 +22,11 @@ export default function Hole({dark, children, image, recalc, setRecalc}: Props){
         pathRef.current?.click();
         latestPathRef.current = pathName;
         if (!setRecalc) return;
-        setRecalc(prev => prev + 1)
-    }, [pathName, setRecalc]);
+        const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+        if (viewportWidth >= 768){
+            setRecalc(prev => prev + 1)
+        }
+    }, [pathName]);
 
     const [dimensions, setDimensions] = useState({ x : 0 , y : 0 })
     const [updates, setUpdates] = useState(0)

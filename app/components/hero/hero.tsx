@@ -37,8 +37,22 @@ export default function Hero({randomImage}:Props){
                 main.style.width = '100%'
             } else {
                 main.style.height = 'auto'
-                main.style.width = boxRef.current.clientWidth + 'px'
+                main.style.width = 'auto'
             }
+        }
+    }
+
+    const resizeMargin = () => {
+        const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+        if (viewportWidth >= 768){
+            recalcMargin()
+        }
+    }
+
+    const resizeMain = () => {
+        const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+        if (viewportWidth >= 768){
+            setMain()
         }
     }
 
@@ -53,8 +67,8 @@ export default function Hero({randomImage}:Props){
         recalcMargin()
         setMain()
 
-        window.addEventListener("resize", recalcMargin)
-        window.addEventListener("resize", setMain)
+        window.addEventListener("resize", resizeMargin)
+        window.addEventListener("resize", resizeMain)
 
         const observer = new ResizeObserver(() => {
             recalcMargin()
@@ -65,8 +79,8 @@ export default function Hero({randomImage}:Props){
         }
 
         return () => {
-            window.removeEventListener("resize", recalcMargin)
-            window.removeEventListener("resize", setMain)
+            window.addEventListener("resize", resizeMargin)
+            window.addEventListener("resize", resizeMain)
             observer.disconnect()
         }
     }, [])

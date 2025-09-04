@@ -22,7 +22,7 @@ export default function Home() {
         <ListItem indent={1}>provided meals, prizes and resources 100% free of charge</ListItem>
         <ListItem indent={1}>donated 60+ meals to local homeless shelters</ListItem>
         <ListItem>won 5 hackathons, including 1st overall at <Link className="underline" href={"https://jamhacks.ca"} target="_blank">Canada's largest high school hackathon</Link></ListItem>
-        <ListItem>served as web dev intern at <Link className="underline" href={"https://cilc.ca"} target="_blank">The CILC</Link>, reconstructing their broken website from scratch in time for grant applications</ListItem>
+        <ListItem>served as web dev intern at <Link className="underline" href={"https://cilc.ca"} target="_blank">The CILC</Link></ListItem>
         <h6>In my free time, I ...</h6>
         <ListItem>🎾 play tennis</ListItem>
         <ListItem>📱 grind Clash Royale</ListItem>
