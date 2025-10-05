@@ -1,0 +1,21 @@
+Host *.student.cs.uwaterloo.ca
+    User dgou
+    IdentityFile ~/.ssh/id_rsa.pub
+Host ubuntu2404-002.student.cs.uwaterloo.ca
+Host ubuntu2404-004.student.cs.uwaterloo.ca
+Host ubuntu2404-006.student.cs.uwaterloo.ca
+Host ubuntu2404-008.student.cs.uwaterloo.ca
+Host ubuntu2404-010.student.cs.uwaterloo.ca
+Host ubuntu2404-012.student.cs.uwaterloo.ca
+# Personal GitHub
+Host github.com-personal
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_personal
+
+# Work GitHub
+Host github.com-work
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_work
+

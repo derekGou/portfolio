@@ -11,11 +11,15 @@ export default function Background({image}: Props) {
         const img = new Image();
         img.src = `/bg/IMG_${image}.JPG`;
         function getAverageColor(imageElement:HTMLImageElement) {
+            if (!imageElement) return;
+
             const canvas = document.createElement("canvas");
             const context = canvas.getContext("2d");
 
             canvas.width = imageElement.width;
             canvas.height = imageElement.height;
+            
+            if (canvas.width==0 || canvas.height==0) return;
 
             if (!context) return;
             context.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
@@ -38,15 +42,17 @@ export default function Background({image}: Props) {
 
             return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
         }
-        document.body.style.backgroundColor = getAverageColor(img) || 'black'
+        img.onload = () => {
+            document.body.style.backgroundColor = getAverageColor(img) || 'black'
+        }
     }, [])
 
     return (
-        <div className="fixed top-0 left-0 w-screen h-screen overflow-hidden -z-50">
+        <div className="pointer-events-none fixed top-0 left-0 w-screen h-screen overflow-hidden -z-50">
             <img
                 src={`/bg/IMG_${image}.JPG`}
                 alt="Background image"
-                className="w-full h-screen object-cover"
+                className="pointer-events-none w-full h-screen object-cover"
             />
         </div>
     )

@@ -7,6 +7,7 @@
   --color-logo-blue: #0dbbe4;
   --breakpoint-xs: 30rem;
   --breakpoint-xxs: 25rem;
+  --breakpoint-md: 54rem;
 }
 
 @layer base {
@@ -19,14 +20,18 @@
   }
 }
 
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0001;
+}
+::-webkit-scrollbar-thumb {
+  background: #fff8;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 :root {
@@ -39,14 +44,8 @@ body {
   font-family: 'IBM Plex Mono', monospace;
   width: 100vw;
   min-height: 100dvh;
-  overflow: hidden;
+  overflow-x: hidden;
   overflow-y: scroll;
-  text-align: center;
-}
-
-.body {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -78,13 +77,6 @@ nav {
   background-color: transparent !important;
 }
 
-::-webkit-scrollbar-track {
-  background: #0001;
-}
-::-webkit-scrollbar-thumb {
-  background: #fff8;
-}
-
 @media screen and (min-width: 640px) {
   body {
     text-align: left;
@@ -97,7 +89,7 @@ nav {
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 864px) {
   body {
     text-align: left;
     overflow-y: hidden;

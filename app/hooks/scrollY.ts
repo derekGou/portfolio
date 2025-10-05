@@ -12,7 +12,6 @@ export function useScrollY() {
 
         // Initialize with current scroll position
         handleScroll();
-        console.log(scroll)
 
         return () => {
             window.removeEventListener("scroll", handleScroll);

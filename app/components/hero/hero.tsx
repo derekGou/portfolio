@@ -8,6 +8,7 @@ import Links from "../links/links"
 import Nav from "../nav/nav"
 import { useEffect, useRef, useState } from "react"
 import eventBus from "../eventBus/eventBus"
+import { isMobile } from 'react-device-detect';
 
 interface Props {
     randomImage: string;
@@ -21,8 +22,7 @@ export default function Hero({randomImage}:Props){
 
     const recalcMargin = () => {
         if (boxRef.current) {
-            const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
-            if (viewportWidth >= 768){
+            if (!isMobile){
                 const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
                 const newMargin = (viewportHeight - boxRef.current.clientHeight) / 2;
                 setMargin(prev => (prev !== newMargin ? newMargin : prev));
@@ -35,9 +35,9 @@ export default function Hero({randomImage}:Props){
         if (boxRef.current) {
             const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
             const main = document.getElementsByTagName("main")[0]
-            if (viewportWidth >= 768){
+            if (viewportWidth >= 864){
                 main.style.height = boxRef.current.clientHeight + 'px'
-                main.style.width = '100%'
+                main.style.width = 'auto'
             } else {
                 main.style.height = 'auto'
                 main.style.width = 'auto'
@@ -46,15 +46,13 @@ export default function Hero({randomImage}:Props){
     }
 
     const resizeMargin = () => {
-        const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
-        if (viewportWidth >= 768){
+        if (!isMobile){
             recalcMargin()
         }
     }
 
     const resizeMain = () => {
-        const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
-        if (viewportWidth >= 768){
+        if (!isMobile){
             setMain()
         }
     }
@@ -69,7 +67,7 @@ export default function Hero({randomImage}:Props){
 
         recalcMargin()
         setMain()
-
+        
         window.addEventListener("resize", resizeMargin)
         window.addEventListener("resize", resizeMain)
 
