@@ -5,6 +5,7 @@ import HoleImage from "./holeimage";
 import eventBus from "../eventBus/eventBus";
 import { usePathname } from "next/navigation";
 import { isMobile } from 'react-device-detect';
+import useWindowFocus from "@/app/hooks/focus";
 
 interface Props {
     dark?: boolean;
@@ -19,12 +20,19 @@ export default function Hole({dark, children, image, recalc, setRecalc}: Props){
     const pathRef = useRef<HTMLButtonElement>(null);
     const latestPathRef = useRef(pathName);
 
+    const [focused, setFocused] = useState(document.hasFocus());
+
+    useWindowFocus(
+        () => setFocused(true),
+        () => setFocused(false)
+    );
+
     useEffect(()=>{
         if (!setRecalc) return;
-        if (isMobile){
+        if (!isMobile){
             setRecalc(prev => prev + 1)
         }
-    }, [])
+    }, [focused]);
 
     useEffect(()=>{
         pathRef.current?.click();
