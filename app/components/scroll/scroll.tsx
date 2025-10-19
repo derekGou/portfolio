@@ -22,7 +22,7 @@ export default function Scroll(){
     }
 
     return (
-        <div style={{ display: display }} className="md:hidden fixed h-dvh w-dvw top-0 left-0 z-200 pointer-events-none">
+        <div style={{ display: display }} className="md:hidden fixed h-dvh w-dvw bottom-0 right-0 z-200 pointer-events-none">
             <div className="absolute bottom-0 right-0 p-4">
                 <div onClick={()=>{scrollUp()}}>
                     <Glass dark={true} className="rounded-full cursor-pointer pointer-events-auto border-solid! border-2! border-[#cccc]! hover:brightness-125 transition-all">
