@@ -29,6 +29,13 @@ export default function Hole({dark, children, image, recalc, setRecalc}: Props){
 
     useEffect(()=>{
         if (!setRecalc) return;
+        if (isMobile){
+            setRecalc(prev => prev + 1)
+        }
+    }, []);
+
+    useEffect(()=>{
+        if (!setRecalc) return;
         if (!isMobile){
             setRecalc(prev => prev + 1)
         }
