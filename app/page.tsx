@@ -12,8 +12,9 @@ export default function Home() {
       <div className="flex flex-col gap-1 items-start justify-start w-full h-fit">
         <p className="mb-4">I'm a software dev building <u>impactful, inviting, intuitive user experiences</u>.</p>
         <h6>Currently, I'm ...</h6>
+        <ListItem>an incoming fullstack engineer at <Link className="underline" href={"https://www.statsyuk.ca/"} target="_blank">Statyuk Analytics</Link></ListItem>
         <ListItem>studying <Link className="underline" href={"https://se-webring.xyz/"} target="_blank">Software Engineering at the University of Waterloo</Link></ListItem>
-        <ListItem>developing <Link className="underline" href={"https://omnivim.org"} target="_blank">Omnivim</Link>, a tray app making Vim motions global</ListItem>
+        <ListItem>developing the <Link className="underline" href={"https://github.com/derekGou/radiantBrowser"} target="_blank">Radiant Browser</Link>, a custom cross-platform chromium web browser</ListItem>
         <ListItem>building drones with the <Link className="underline" href={"https://uwarg.com"} target="_blank">Waterloo Aerial Robotics Group</Link></ListItem>
         <h6>Previously, I ...</h6>
         <ListItem>co-founded <Link className="underline" href={"https://sprouthacks.ca"} target="_blank">SproutHacks</Link>, a non-profit organization that hosts high school hackathons</ListItem>
@@ -21,7 +22,7 @@ export default function Home() {
         <ListItem>served as web dev intern at <Link className="underline" href={"https://cilc.ca"} target="_blank">The CILC</Link></ListItem>
         <h6>In my free time, I ...</h6>
         <ListItem>🎾 play tennis</ListItem>
-        <ListItem>📱 grind Clash Royale</ListItem>
+        <ListItem>🎮 grind Valorant</ListItem>
         <ListItem>♟️ dabble in chess</ListItem>
       </div>
     </>

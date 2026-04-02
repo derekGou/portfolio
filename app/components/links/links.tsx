@@ -16,10 +16,10 @@ export default function Links() {
                         <Link href="http://linkedin.com/in/derek-gou" target="_blank" rel="noopener noreferrer" className="transition-all cursor-pointer hover:brightness-110">
                             <FaLinkedin />
                         </Link>
-                        <Link href="mailto:derekgou19@gmail.com" target="_blank" className="transition-all cursor-pointer hover:brightness-110">
+                        <Link href="mailto:dgou@uwaterloo.ca" target="_blank" className="transition-all cursor-pointer hover:brightness-110">
                             <FaEnvelopeSquare />
                         </Link>
-                        <Link href="/Derek_Gou___Resume.pdf" target="_blank" className="transition-all cursor-pointer hover:brightness-110">
+                        <Link href="/Derek_Gou___Resume___31_3_25.pdf" target="_blank" className="transition-all cursor-pointer hover:brightness-110">
                             <FaSquarePollHorizontal />
                         </Link>
                     </div>

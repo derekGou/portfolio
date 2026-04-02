@@ -3,7 +3,7 @@
 import Glass from "@/app/components/glass/glass";
 import Link from "next/link";
 import { GiMonkey } from "react-icons/gi";
-import { SiGnubash, SiVercel, SiTensorflow, SiScrapy, SiMediapipe, SiOpencv, SiThreedotjs, SiBlender, SiUnity, SiFigma, SiGit, SiInkscape, SiMysql, SiMongodb, SiFirebase, SiFlask, SiExpress, SiNodedotjs, SiMui, SiVite, SiNextdotjs, SiReact, SiTailwindcss, SiC, SiCplusplus, SiJavascript, SiTypescript, SiPython, SiHtml5, SiCss3 } from "react-icons/si";
+import { SiPytorch, SiSqlite, SiElectron, SiGnubash, SiVercel, SiTensorflow, SiScrapy, SiMediapipe, SiOpencv, SiThreedotjs, SiBlender, SiUnity, SiFigma, SiGit, SiInkscape, SiMysql, SiMongodb, SiFirebase, SiFlask, SiExpress, SiNodedotjs, SiMui, SiVite, SiNextdotjs, SiReact, SiTailwindcss, SiC, SiCplusplus, SiJavascript, SiTypescript, SiPython, SiHtml5, SiCss3 } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 import Skill from "@/app/components/skill/skill";
 import Experience from "@/app/components/experience/experience";
@@ -24,23 +24,26 @@ const languages = [
 const frameworks = [
     { icon: <SiReact />, name: "React" },
     { icon: <SiNextdotjs />, name: "Next.js" },
+    { icon: <SiElectron />, name: "Electron" },
     { icon: <SiVite />, name: "Vite" },
-    { icon: <SiTailwindcss />, name: "Tailwind" },
-    { icon: <SiMui />, name: "MUI" },
     { icon: <SiNodedotjs />, name: "Node.js" },
     { icon: <SiExpress />, name: "Express" },
     { icon: <SiFlask />, name: "Flask" },
     { icon: <SiFirebase />, name: "Firebase" },
     { icon: <SiMongodb />, name: "MongoDB" },
     { icon: <SiMysql />, name: "MySQL" },
+    { icon: <SiSqlite />, name: "SQLite" },
+    { icon: <SiTailwindcss />, name: "Tailwind" },
+    { icon: <SiMui />, name: "MUI" },
 ];
 
 const libraries = [
-    { icon: <SiThreedotjs />, name: "Three.js" },
-    { icon: <SiOpencv />, name: "OpenCV" },
-    { icon: <SiMediapipe />, name: "Mediapipe" },
-    { icon: <SiScrapy />, name: "Scrapy" },
     { icon: <SiTensorflow />, name: "Tensorflow" },
+    { icon: <SiPytorch />, name: "Pytorch" },
+    { icon: <SiOpencv />, name: "OpenCV" },
+    { icon: <SiScrapy />, name: "Scrapy" },
+    { icon: <SiThreedotjs />, name: "Three.js" },
+    { icon: <SiMediapipe />, name: "Mediapipe" },
 ];
 
 const tools = [
@@ -60,7 +63,7 @@ export default function About() {
         <>
             <h3 className="mb-4">About Me</h3>
             <div className="flex flex-col gap-1 items-start justify-start w-full h-fit">
-                <p className="mb-4">I'm currently studying <u>Software Engineering (BSE) at the University of Waterloo</u>. In my free time, I'm building <Link href="https://omnivim.org" target="_blank" className="underline">Omnivim</Link>, a tray app for hardcore vim users.</p>
+                <p className="mb-4">I'm currently studying <u>Software Engineering (BSE) at the University of Waterloo</u>. In my free time, I'm building the <Link href="https://github.com/derekGou/radiantBrowser" target="_blank" className="underline">Radiant Browser</Link>, a custom cross-platform chromium web browser.</p>
                 <Glass className="w-full mb-4">
                     <div className="m-4 w-full flex flex-col gap-2">
                         <h6 className="text-left!">Languages</h6>

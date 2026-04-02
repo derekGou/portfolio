@@ -20,7 +20,9 @@ export default function Hole({dark, children, image, recalc, setRecalc}: Props){
     const pathRef = useRef<HTMLButtonElement>(null);
     const latestPathRef = useRef(pathName);
 
-    const [focused, setFocused] = useState(document.hasFocus());
+    const [focused, setFocused] = useState(() =>
+        typeof document !== "undefined" ? document.hasFocus() : true
+    );
 
     useWindowFocus(
         () => setFocused(true),

@@ -13,21 +13,28 @@ type Item =
 
 export const projectlist:Item[] = [
     {
+        name: "Radiant Browser", 
+        image: "/projects/radiant.svg", 
+        dates: "Ongoing", 
+        skills: ["React", "Typescript", "Tailwind", "Electron", "Chromium", "SQLite", "C++", "Swift"].sort(), 
+        href: "https://github.com/derekGou/radiantBrowser", 
+        children: <>Custom cross-platform chromium web browser, with custom crosshair system</>,
+    },
+    {
+        name: "Swipe", 
+        image: "/projects/swipe.png", 
+        dates: new Date(2025, 12, 21), 
+        skills: ["React", "Typescript", "Python", "Tensorflow", "OpenCV"].sort(), 
+        href: "https://github.com/derekGou/Swipe", 
+        children: <>Slideshow app with hand gesture controls</>,
+    },
+    {
         name: "derekgou.com", 
         image: "/projects/LogoPF.svg", 
         dates: "Ongoing", 
         skills: ["React", "Typescript", "Tailwind", "NextJS", "Three"].sort(), 
         href: "https://derekgou.com/", 
         children: <>Personal portfolio website</>,
-    },
-    {
-        name: "omnivim", 
-        image: "/projects/omnivim.svg", 
-        dates: "Ongoing", 
-        skills: ["Python", "C++", "Swift"].sort(), 
-        href: "https://dorahacks.io/buidl/23072", 
-        children: <>Tray app making vim motions global, being rebuilt in C++ & Swift</>,
-        winner: "3rd overall @ HackCanada"
     },
     {
         name: "TouchUp", 
@@ -37,6 +44,15 @@ export const projectlist:Item[] = [
         href: "https://dorahacks.io/buidl/13414", 
         children: <>Tray app for navigating with hand gestures</>,
         winner: "1st overall @ JamHacks8"
+    },
+    {
+        name: "omnivim", 
+        image: "/projects/omnivim.svg", 
+        dates: new Date(2025, 2, 23), 
+        skills: ["Python"].sort(), 
+        href: "https://dorahacks.io/buidl/23072", 
+        children: <>Tray app making vim motions global</>,
+        winner: "3rd overall @ HackCanada"
     },
     {
         name: "WCI MApp", 

@@ -12,6 +12,14 @@ type Item =
 
 export const experienceList:Item[] = [
     {
+        name: "Full Stack Engineer", 
+        org: "Statsyuk Analytics", 
+        dates: "May. 2026 - Aug. 2026", 
+        skills: ["Next.js, Typescript, Tailwind, Node.js"].sort(), 
+        href: "https://statsyuk.ca", 
+        children: <>Building the future of hockey data</>,
+    },
+    {
         name: "Autonomy Team Member", 
         org: "UWARG", 
         dates: "Sep. 2025 - Present", 
